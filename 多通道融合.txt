@@ -1,0 +1,3 @@
+	Mat merge_img[] = {imgH2,imgS2,imgV2};
+
+	merge(merge_img,3,enhance_img);

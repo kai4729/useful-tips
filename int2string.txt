@@ -1,0 +1,6 @@
+int ss;
+char temp[64];
+string st;
+ss = 1000;
+sprintf(temp, "%d", ss);
+st = temp;

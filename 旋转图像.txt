@@ -1,0 +1,21 @@
+c++
+	int angle = 10;
+	Mat rotateMat = getRotationMatrix2D(PlateCenter,angle,1);
+	Mat rotatedImg;
+	warpAffine(src,rotatedImg,rotateMat,src.size(),1,1); //制婢野割
+	//warpAffine(src,rotatedImg,rotateMat,src.size(),1,0); //0野割
+
+
+	imshow("rotatedImg",rotatedImg);
+
+python
+rotate_center1 = (srcImg.shape[0]/2,srcImg.shape[1]/2)
+rotate_center2 = (srcImg.shape[0]*(3.0/4),srcImg.shape[1]/2)
+rotate_angle1 = -10
+rotate_angle2 = -5
+
+rotated_mat1 = cv.getRotationMatrix2D(rotate_center1,rotate_angle1,1)
+rotated_mat2 = cv.getRotationMatrix2D(rotate_center2,rotate_angle2,1)
+# rotated_img = cv.transform(srcImg,rotated_mat) warpAffine
+rotated_img1 = cv.warpAffine(srcImg,rotated_mat1,(srcImg.shape[1],srcImg.shape[0]))
+rotated_img2 = cv.warpAffine(srcImg,rotated_mat2,(srcImg.shape[1],srcImg.shape[0]),borderMode=1)

@@ -1,0 +1,3 @@
+string filePath;	
+int p = filePath.find_last_of("/");
+string fileName(filePath.substr(p+1));

@@ -1,0 +1,18 @@
+#include <opencv2\opencv.hpp> 
+string dir_path = "F:/t/PEL";
+
+cv::Directory dir;
+dir.GetListFiles(dir_path, "*.JPG", true);
+
+vector<string> fileNames = dir.GetListFilesR(dir_path, "*", true);
+src = cvLoadImage(fileNames[i].c_str(),1);
+
+
+int position = filePath[i].find_last_of('/');
+string baseName(filePath[i].c_str()+position+1,filePath[i].c_str()+filePath[i].length());
+
+
+
+(1)、GetListFiles：遍历指定文件夹下的所有文件，不包括指定文件夹内的文件夹；
+(2)、GetListFolders：遍历指定文件夹下的所有文件夹，不包括指定文件夹下的文件；
+(3)、GetListFilesR：遍历指定文件夹下的所有文件，包括指定文件夹内的文件夹。

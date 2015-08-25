@@ -1,0 +1,23 @@
+	//获取图像路径的切片
+	string path_temp = filePath;
+	int position = 0;
+	string flagChar1 = "/";
+	string flagChar2 = "\\";
+	vector<string> pathSplit;
+	int pathNum = 0;
+	startP = 0;
+	while(path_temp.find_first_of(flagChar1,position)!=string::npos || path_temp.find_first_of(flagChar2,position)!=string::npos) 
+	{
+		int p1 = path_temp.find_first_of(flagChar1,position);
+		int p2 = path_temp.find_first_of(flagChar2,position);
+		p1 = p1 != string::npos ? p1 : 100000;
+		p2 = p2 != string::npos ? p2 : 100000;
+
+		position = p1<p2 ? p1 : p2 ;
+		endP = position;
+		pathSplit.push_back( path_temp.substr(startP,endP-startP));
+		startP = endP+1;
+		position++;
+
+	}
+	pathSplit.push_back( path_temp.substr(position));

@@ -1,0 +1,13 @@
+1、创建类，并获取类的指针
+bool InitBeardDetect(const char* classifierDirect,DWORD& pASM)
+{
+
+	Cyw_ASM* Casm = new Cyw_ASM;
+
+	pASM = (DWORD)Casm;
+	return Casm->InitASM(classifierDirect);
+	
+}
+
+2、读取类指针并赋给类
+Cyw_ASM* Casm = (Cyw_ASM*)pASM;

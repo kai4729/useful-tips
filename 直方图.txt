@@ -1,0 +1,15 @@
+	Mat hist;
+	int HistSize = 256;
+	float range[] = {1,255};
+	const float* hrange = { range };
+	calcHist(&Beard_reg,1,0,Mat(),hist,1,&HistSize,&hrange);
+	Mat HistImg = Mat::zeros(Size(hist.rows,200),CV_8UC3);
+	normalize(hist,hist,0,HistImg.rows,NORM_MINMAX,-1,Mat());
+	for(int i=0;i<hist.rows;i++)
+	{
+
+		line(HistImg,Point(i,cvRound(HistImg.rows-hist.at<float>(i))),
+			Point(i,HistImg.rows),
+			Scalar(0,0,255),1);
+
+	}

@@ -1,0 +1,113 @@
+// opencvReadMat.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+
+
+#include <iostream>  
+#include <opencv2/core/core.hpp>  
+#include <opencv2/imgproc/imgproc.hpp>  
+#include <mat.h>  
+using namespace cv;  
+using namespace std;  
+Mat DataRead(string datapath, string filename, string matname)  
+{  
+	//MATFile *pmatFile = matOpen((datapath + "\\" + filename + ".mat").c_str(),"r");  
+	MATFile *pmatFile = matOpen("theta.mat","r");
+	if (pmatFile == NULL)  
+		cout<<"MatOpen error!!!"<<endl;  
+	mxArray *pMxArray = matGetVariable(pmatFile, matname.c_str()); //从文件中获取数据到mxArray结构中  
+	if (pMxArray == NULL)  
+		cout<<"Error reading existing matrix "<<matname<<"!!!"<<endl;  
+	double *ReadArray = (double*) mxGetData(pMxArray);    
+	int cols = mxGetM(pMxArray);//行列存储方式不一致，需注意  
+	int rows = mxGetN(pMxArray);    
+	Mat ReadMat(rows,cols,CV_32FC1);  //此处主要是自己工程其他模块需使用float型的  
+	for (int i=0; i<rows; i++)    
+	{  
+		for (int j=0; j<cols; j++)  
+		{  
+			ReadMat.at<float>(i,j) = (float)ReadArray[i*cols+j];  
+		}  
+	}  
+	mxDestroyArray(pMxArray);  
+	if (matClose(pmatFile) != 0)  
+		cout<<"Error closing file "<<pmatFile<<endl;  
+	cout<<"Read done!!!"<<endl;  
+	return ReadMat;  
+}  
+int DataSave(Mat SrcMat, string datapath, string filename, string matname)  
+{  
+	int rows = SrcMat.rows;  
+	int cols = SrcMat.cols;  
+	Mat SaveMat(rows,cols,CV_64FC1);  
+	if (SrcMat.type() != CV_64FC1)//判断是否为double型的矩阵  
+	{  
+		for (int i=0;i<rows;i++)  
+		{  
+			float *src_ptr = SrcMat.ptr<float>(i);  
+			double *save_ptr = SaveMat.ptr<double>(i);  
+			for (int j=0;j<cols;j++)  
+			{  
+				*save_ptr++ = src_ptr[j];  
+			}  
+		}  
+	}   
+	else  
+		SaveMat = SrcMat.clone();  
+	MATFile *pmatFile = matOpen((datapath + "\\" + filename + ".mat").c_str(),"w"); //以写的形式打开  
+	if(pmatFile == NULL)  
+	{  
+		cout<<"MatOpen error!!!"<<endl;  
+		return EXIT_FAILURE;  
+	}  
+	mxArray *pMxArray = mxCreateDoubleMatrix(cols, rows, mxREAL);  //需注意matlab按列储存mat文件，与一般的二维数组、opencv的Mat以行存储不一致，mxCreateDoubleMatrix创建的是double型的pMxArray结构，对应的还有mxCreateNumericMatrix（整型）、mxCreateLogicalMatrix（布尔型）  
+	if(pMxArray == NULL)  
+	{  
+		cout<<"Unable to create mxArray, maybe out of memory!!!"<<endl;  
+		return EXIT_FAILURE;  
+	}  
+	memcpy((void *)(mxGetPr(pMxArray)), (void *)SaveMat.ptr<float>(0), sizeof(double)*rows*cols);//内存copy，注意源和目的地址的数据类型需一致  
+	cout<<"Saving data---"<<datapath<<"\\"<<filename<<endl;  
+	int status = matPutVariable(pmatFile, matname.c_str(), pMxArray);//put到文件  
+	if (status != 0) {  
+		cout<<"Error using matPutVariable!!!"<<endl;  
+		return EXIT_FAILURE;  
+	}   
+	mxDestroyArray(pMxArray);//结构销毁  
+	if (matClose(pmatFile) != 0) {  
+		cout<<"Error closing file "<<pmatFile<<endl;  
+		return EXIT_FAILURE;  
+	}  
+	return EXIT_SUCCESS;  
+}  
+void main()  
+{  
+	/************************************************************************/  
+	/*                     test mat write and read                          */  
+	string filedir = "..";//mat文件的文件目录，此处设置的当前目录  
+	string filename = "theta";//mat文件的文件名  
+	string matname = "theta";//mat文件的文件头  
+	//Mat save(2000,1000,CV_64FC1);//注意存取mat文件的时候数据类型要转化为double型                                
+	//for (int i=0;i<save.rows;i++)  
+	//{  
+	//	double* current = save.ptr<double>(i);  
+	//	for (int j=0;j<save.cols;j++)  
+	//	{  
+	//		*current++ = i * save.cols + j + 1;  
+	//	}  
+	//}  
+	//cout<<"Start saving mat file!"<<endl;  
+	//if(DataSave(save,filedir,filename,matname) == EXIT_FAILURE)  
+	//{  
+	//	cout<<"DataSave failure!!!"<<endl;  
+	//	return;  
+	//}  
+	//else  
+	//	cout<<"DataSave success!!!"<<endl;  
+	//cout<<"Start reading mat file!"<<endl;  
+	Mat read = DataRead(filedir,filename,matname);  
+	for (int i=0;i<read.cols;i++)  
+		cout<<read.at<float>(0,i)<<" ";  
+	/************************************************************************/  
+}  

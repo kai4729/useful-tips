@@ -1,0 +1,28 @@
+#ifndef YW_ASM_DLL_H
+#define YW_ASM_DLL_H
+
+#include "opencv2\highgui\highgui.hpp"  
+#include <opencv2\opencv.hpp> 
+
+
+#define EXPORT
+#ifdef EXPORT
+#define YW_ASM_API __declspec(dllexport)
+#else
+#define YW_ASM_API __declspec(dllimport)
+#endif
+
+//extern "C" _declspec(dllexport) class yw_ASM
+class YW_ASM_API yw_ASM
+{
+public:
+	yw_ASM(){};
+	int InitASM( const char*  datadir);
+	int Get77FeaturePoints(IplImage* inputImage,float* landmarks);
+	int UninitASM( const char*  datadir) ;
+	~yw_ASM(){};
+
+};
+
+
+#endif

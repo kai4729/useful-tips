@@ -1,0 +1,20 @@
+写入Mat
+
+	FileStorage fs("imagePatch.xml", FileStorage::WRITE);
+
+
+	fs<<"PatchMat"<<totalPatchMat;  //PatchMat为数据标识，totalPatchMat为矩阵
+	
+
+	fs.release();
+
+读入
+
+	FileStorage fs;
+	fs.open("imagePatch.xml",FileStorage::READ);
+
+
+	fs["PatchMat"]>>patch;  //PatchMat为数据标识，PatchMat
+
+
+	fs.release();

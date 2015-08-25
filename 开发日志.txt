@@ -1,0 +1,18 @@
+1、包含Psapi.h时要注意在#include <Psapi.h>前包含windows.h
+“
+#include "stdafx.h"
+#include <windows.h>       // 如果没有包含windows.h 头文件就会出现此错误。
+#include <Psapi.h>
+#pragma comment(lib, "psapi.lib")
+所以，在#include <Psapi.h>前包含windows.h即可
+
+http://hi.baidu.com/zgcat/item/89ca07970b28878b59146127
+
+2、包含Psapi.h时，还要添加链接：在项目－》配置属性－》链接器－》输入－》附加依赖项
+在附加依赖项窗口中加上Psapi.lib
+http://fancyxinyu.blog.163.com/blog/static/182321366201211792853135/
+
+3、关于人脸识别，长得与大众不同的部位才更被关注，因而，与平均脸差异大的部位应该提高置信权值
+
+2014年7月8日11:47:02
+最后一天尝试使用asm做人脸关键点定位，如果不能通过修改各点的配置和增加训练样本改善定位效果，明天将改变思路，寻找新方法进行关键点定位

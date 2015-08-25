@@ -1,0 +1,26 @@
+#include<time.h>
+#include<stdlib.h>
+#include<stdio.h>
+ 
+ 
+voidmain()
+{
+inti,j;
+srand((int)time(0)); //随系统时间产生随机数种子
+for(i=0;i<10;i++)
+{
+j=13+(int)rand()%（77+1）; 产生13至77范围内的随机数
+printf("%d",j);
+}
+}
+
+使用srand(time(0))产生随机数时，要小心,time(0)是本机系统时间，如果前后两次运行srand的间隔非常短，会导致time(0)不变，随机数种子不变，进而造成产生的随机数是重复的
+可以如下解决
+			static unsigned int srandN = 0;
+			srandN++;
+			srand(time(0)+srandN);
+
+下面是产生随机矩阵的好方法，改变种子s后才会产生不同矩阵
+	RNG rng(s);
+	rng.fill(W1,RNG::UNIFORM,-0.25,0.25);	//均匀分布   正态分布NORMAL
+    		

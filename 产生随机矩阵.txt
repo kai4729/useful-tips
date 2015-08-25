@@ -1,0 +1,7 @@
+1、产生在[a，b]上均匀分布的矩阵，	
+cv::randu(W1,a,b);
+void randu(InputOutputArray mtx, InputArray low, InputArray high);
+
+2、产生均值为a，标准差为b的正态分布矩阵
+cv::randn(W2,a,b);
+void randn(InputOutputArray mtx, InputArray mean, InputArray stddev);

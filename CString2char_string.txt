@@ -1,0 +1,6 @@
+	CString file_path = dlg.GetPathName();
+	char* filename = (LPSTR)(LPCTSTR)(file_path);
+	string imgname;
+	imgname = file_path.GetString();
+
+使用多字节字符

@@ -1,0 +1,10 @@
+	Mat img_HSV,imgH,imgS,imgV;
+	imgH.create(src.size(),CV_8U);
+	imgS.create(src.size(),CV_8U);
+	imgV.create(src.size(),CV_8U);
+
+	cvtColor(src,img_HSV,CV_BGR2HSV_FULL);
+	Mat img_out[] = {imgH,imgS,imgV};
+	int from_to[] = {0,0,1,1,2,2};
+	
+	mixChannels(&img_HSV,1,img_out,3,from_to,3);

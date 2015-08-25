@@ -1,0 +1,18 @@
+#include "string"
+using namespace  std;
+
+
+	CFileDialog dlg(
+		TRUE, NULL, NULL,
+		OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY,
+		_T("image(*.jpg) |*.jpg| All Files (*.*) |*.*|"), NULL
+		);
+	// 选项图片的约定
+	dlg.m_ofn.lpstrTitle = _T("Open image file");// 打开文件对话框的标题名
+	if( dlg.DoModal() != IDOK )// 判断是否获得图片
+		return;
+	CString imgName = dlg.GetPathName();// 获取图片路径
+
+	
+**************************************
+string file_path = path.GetString();

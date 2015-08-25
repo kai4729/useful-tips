@@ -1,0 +1,5 @@
+string folder_name,img_path;
+int position_slash;
+position_slash = img_path.find_last_of('\\');
+
+folder_name = img_path.substr(0,position_slash);

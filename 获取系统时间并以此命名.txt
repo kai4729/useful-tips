@@ -1,0 +1,13 @@
+#include <windows.h> 
+#include <stdio.h> 
+#include "string"
+#include "atlstr.h"
+
+	SYSTEMTIME sys; 
+	GetLocalTime( &sys ); 
+
+	CString str;
+	str.Format("%04d%02d%02d_%02d%02d%02d_%04d",sys.wYear,sys.wMonth,sys.wDay,sys.wHour,sys.wMinute, sys.wSecond,sys.wMilliseconds); 
+	string savePath = "H:/veheicleSample/headOfCar/";
+
+	imwrite( savePath + str.GetString() + "_h.bmp",headMat);

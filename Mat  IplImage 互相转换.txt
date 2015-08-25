@@ -1,0 +1,9 @@
+Mat  IplImage »¥Ïà×ª»»
+
+1¡¢
+Mat image1;  
+IplImage *image2 = (&(IplImage)image1);  
+
+2¡¢
+IplImage convert to Mat
+Mat mtx(img); // convert IplImage* -> Mat    

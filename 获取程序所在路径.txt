@@ -1,0 +1,10 @@
+#include "windows.h"
+
+	char programPath[MAX_PATH];
+	
+	if( GetModuleFileName( NULL, programPath, MAX_PATH ) )
+	{
+		printf("GetModuleFileName failed %s\n", programPath);
+	}
+
+使用多字节字符
