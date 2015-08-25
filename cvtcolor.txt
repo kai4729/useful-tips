@@ -1,4 +1,4 @@
-1、cvtColor(face_roi,face_YCrCb,CV_BGR2HSV);
+1、cvtColor(inputMat,outputMat,CV_BGR2HSV);
 CV_BGR2HSV  H的最大值为179
 CV_BGR2HSV_FULL  H的最大值为255
 
